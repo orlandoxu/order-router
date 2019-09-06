@@ -1,0 +1,15 @@
+{
+  "name": "order-router",
+  "version": "1.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orlandoxu/order-router.git"
+  },
+  "description": "Router 4 TCP Instructions",
+  "main": "router.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "orlandoxu",
+  "license": "ISC"
+}
