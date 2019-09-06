@@ -1,6 +1,7 @@
 "use strict";
 
 const _routes = Symbol('routes');
+const _prefix = Symbol('prefix');
 const _all_orders = Symbol('all_orders');
 const _common_routes = Symbol('common_routes');
 const _routes_result = Symbol('routes_result');
@@ -17,6 +18,10 @@ class Router {
 
   use(func) {
     this[_routes].push({idx: this[_func_index]++, func});
+  }
+
+  prefix(pre) {
+    this[_prefix] = pre;
   }
 
   all() {
@@ -45,20 +50,25 @@ class Router {
   };
 
   routes(order) {
-    if (!this[_all_orders][order]) {
+    let _order = order;
+    if (typeof order === 'object' && this[_prefix]) {
+      _order = order[this[_prefix]];
+    }
+
+    if (!this[_all_orders][_order]) {
       return [];
     }
-    if (!this[_routes_result][order]) {
+    if (!this[_routes_result][_order]) {
       let route = [];
       for (let i = 0; i < this[_routes].length; i++) {
-        if (!this[_routes][i].order || this[_routes][i].order == order) {
+        if (!this[_routes][i].order || this[_routes][i].order == _order) {
           route.push(this[_routes][i].func);
           continue
         }
       }
-      this[_routes_result][order] = route;
+      this[_routes_result][_order] = route;
     }
-    return this[_routes_result][order];
+    return this[_routes_result][_order];
   }
 }
 
